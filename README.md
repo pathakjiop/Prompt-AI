@@ -1,7 +1,3 @@
-Sure, here's a basic README for your project. Please customize it as needed to suit your specific project requirements and details.
-
----
-
 # Django & React Prompt Generator Project
 
 This project is a Django-based backend API that generates prompts using data from a React-based frontend. The API receives data about a role, context, action, and instructions, and it returns a generated prompt based on that data. The prompt is then displayed on the frontend.
