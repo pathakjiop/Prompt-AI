@@ -5,6 +5,7 @@ This project is a Django-based backend API that generates prompts using data fro
 ## Technologies Used
 
 - **Backend:** Django, Django REST Framework
+- **LLM:** Local Ollama Mistral 7b
 - **Frontend:** React, JavaScript
 
 ## Setup Instructions
