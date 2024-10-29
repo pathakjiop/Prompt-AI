@@ -13,7 +13,7 @@ This project is a Django-based backend API that generates prompts using data fro
 
 1. Clone the repository:
    ```
-   git clone <repository-url>
+   git clone https://github.com/pathakjiop/Prompt-AI.git
    ```
 2. Navigate to the backend directory:
    ```
