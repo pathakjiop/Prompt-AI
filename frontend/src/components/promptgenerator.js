@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 
 export default function PromptGenerator() {
-    const [generatedPrompt, setGeneratedPrompt] = useState(null);
+    const [prompts, setPrompts] = useState({
+        original: null,
+        enhanced: null
+    });
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    async function fetchData() {
+    async function handleSubmit() {
+        setLoading(true);
+        setError(null);
+        
         try {
-            const response = await fetch("http://localhost:8000/api/generate-prompt/", {
+            const response = await fetch("http://localhost:3000/api/generate-prompt", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -18,64 +26,111 @@ export default function PromptGenerator() {
                 }),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Backend validation errors:", errorData);
-                throw new Error(`Bad Request: ${JSON.stringify(errorData)}`);
+                throw new Error(data.message || 'Something went wrong');
             }
 
-            const data = await response.json();
-            setGeneratedPrompt(data.generated_prompt);
+            setPrompts({
+                original: data.data.original_prompt,
+                enhanced: data.data.enhanced_prompt
+            });
         } catch (error) {
-            console.error("Error fetching data:", error);
+            setError(error.message);
+            console.error("Error:", error);
+        } finally {
+            setLoading(false);
         }
     }
 
-    function handleClick() {
-        fetchData();
-    }
-
     return (
-       <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]">
-    <div className="card m-20 w-auto h-auto p-6 bg-base-100 shadow-xl flex flex-col justify-start"> 
-        <h1 className="text-3xl font-bold ml-4">Prompt Generator</h1>  
-        <div className="card-body justify-start ml-4">
-            <div className="w-full">
-                <label className="form-label w-full text-stone-600">
-                    Role
-                    <input type="text" className="form-control ml-3" id="role" placeholder="e.g., Software Engineer" required />
-                </label>
-            </div>
-            <div className="w-full mt-4">
-                <label className="form-label w-full text-stone-600">
-                    Context
-                    <input type="text" className="form-control ml-3" id="context" placeholder="e.g., working on a new project" required />
-                </label>
-            </div>
-            <div className="w-full mt-4">
-                <label className="form-label w-full text-stone-600">
-                    Action
-                    <input type="text" className="form-control ml-3" id="action" placeholder="e.g., design a scalable architecture" required />
-                </label>
-            </div>
-            <div className="w-full mt-4">
-                <label className="form-label w-full text-stone-600">
-                    Instructions
-                    <input type="text" className="form-control ml-3" id="instructions" placeholder="e.g., Consider microservices architecture and cloud deployment" required />
-                </label>
-            </div>
-            <div className="d-grid gap-2 mt-4">
-                <button onClick={handleClick} className="btn btn-dark" type="button">Generate Prompt...</button>
-            </div>
-            {generatedPrompt && (
-                <div className="mt-8 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-semibold mb-4">Generated Prompt:</h2>
-                    <p>{generatedPrompt}</p>
-                </div>
-            )}
-        </div>
-    </div>
-</div>
+        <div className="max-w-4xl mx-auto p-6">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+                <h1 className="text-3xl font-bold mb-8 text-gray-800">AI Prompt Generator</h1>
+                
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                            Role
+                        </label>
+                        <input
+                            type="text"
+                            id="role"
+                            className="w-full p-2 border rounded-md"
+                            placeholder="e.g., Software Engineer"
+                            required
+                        />
+                    </div>
 
+                    <div className="space-y-2">
+                        <label htmlFor="context" className="block text-sm font-medium text-gray-700">
+                            Context
+                        </label>
+                        <input
+                            type="text"
+                            id="context"
+                            className="w-full p-2 border rounded-md"
+                            placeholder="e.g., working on a new project"
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="action" className="block text-sm font-medium text-gray-700">
+                            Action
+                        </label>
+                        <input
+                            type="text"
+                            id="action"
+                            className="w-full p-2 border rounded-md"
+                            placeholder="e.g., design a scalable architecture"
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label htmlFor="instructions" className="block text-sm font-medium text-gray-700">
+                            Instructions
+                        </label>
+                        <input
+                            type="text"
+                            id="instructions"
+                            className="w-full p-2 border rounded-md"
+                            placeholder="e.g., Consider microservices architecture and cloud deployment"
+                            required
+                        />
+                    </div>
+
+                    <button
+                        onClick={handleSubmit}
+                        disabled={loading}
+                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                    >
+                        {loading ? 'Generating...' : 'Generate Prompt'}
+                    </button>
+                </div>
+
+                {error && (
+                    <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                        <p className="text-red-600">{error}</p>
+                    </div>
+                )}
+
+                {prompts.original && (
+                    <div className="mt-8 space-y-6">
+                        <div className="p-4 bg-gray-50 border border-gray-200 rounded-md">
+                            <h2 className="text-xl font-semibold mb-3 text-gray-800">Base Prompt:</h2>
+                            <p className="text-gray-700 whitespace-pre-wrap">{prompts.original}</p>
+                        </div>
+
+                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-md">
+                            <h2 className="text-xl font-semibold mb-3 text-gray-800">Enhanced Prompt:</h2>
+                            <p className="text-gray-700 whitespace-pre-wrap">{prompts.enhanced}</p>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
