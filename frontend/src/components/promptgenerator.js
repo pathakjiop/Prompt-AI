@@ -45,6 +45,7 @@ export default function PromptGenerator() {
     }
 
     return (
+        <div class="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_30%,#000_100%)]">
         <div className="max-w-4xl mx-auto p-6">
             <div className="bg-white rounded-lg shadow-lg p-6">
                 <h1 className="text-3xl font-bold mb-8 text-gray-800">AI Prompt Generator</h1>
@@ -60,7 +61,7 @@ export default function PromptGenerator() {
                             className="w-full p-2 border rounded-md"
                             placeholder="e.g., Software Engineer"
                             required
-                        />
+                            />
                     </div>
 
                     <div className="space-y-2">
@@ -73,7 +74,7 @@ export default function PromptGenerator() {
                             className="w-full p-2 border rounded-md"
                             placeholder="e.g., working on a new project"
                             required
-                        />
+                            />
                     </div>
 
                     <div className="space-y-2">
@@ -99,13 +100,13 @@ export default function PromptGenerator() {
                             className="w-full p-2 border rounded-md"
                             placeholder="e.g., Consider microservices architecture and cloud deployment"
                             required
-                        />
+                            />
                     </div>
 
                     <button
                         onClick={handleSubmit}
                         disabled={loading}
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                        className="w-full bg-black text-white py-2 px-4 rounded-md transition duration-200"
                     >
                         {loading ? 'Generating...' : 'Generate Prompt'}
                     </button>
@@ -132,5 +133,6 @@ export default function PromptGenerator() {
                 )}
             </div>
         </div>
+</div>
     );
 }
