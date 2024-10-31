@@ -45,8 +45,8 @@ export default function PromptGenerator() {
     }
 
     return (
-        <div class="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_30%,#000_100%)]">
-        <div className="max-w-4xl mx-auto p-6">
+        <div class="absolute inset-0 -z-10 h-auto w-auto bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_30%,#000_100%)]">
+        <div className="max-w-4xl mx-auto p-6 m-20 h-auto">
             <div className="bg-white rounded-lg shadow-lg p-6">
                 <h1 className="text-3xl font-bold mb-8 text-gray-800">AI Prompt Generator</h1>
                 
