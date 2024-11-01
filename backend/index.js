@@ -32,9 +32,18 @@ class PromptGenerator {
     }
 
     static generateEnhancementPrompt(basePrompt) {
-        return `Act as a prompt engineer with over 30 years of experience and enhance the following prompt: ${basePrompt}  Make it more effective`;
+        return `Act as an experienced prompt engineer. Please review and enhance this prompt while maintaining its core structure: ${basePrompt}
+
+Key focus areas:
+- Clarity and conciseness
+- Effectiveness for intended purpose
+- Industry best practices
+
+Please provide the enhanced version.`;
     }
 }
+
+
 
 // Mistral API service
 class MistralService {
