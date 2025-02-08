@@ -1,12 +1,11 @@
 # Prompt Generator 
 
 ![Img](https://github.com/user-attachments/assets/152205c2-d4e7-489c-9ef3-a8971f4f6709)
-
-This project is a Django-based backend API that generates prompts using data from a React-based frontend. The API receives data about a role, context, action, and instructions, and it returns a generated prompt based on that data. The prompt is then displayed on the frontend.
+This project is an Express-based backend API that generates prompts using data from a React-based frontend. The API receives data about a role, context, action, and instructions, and it returns a generated prompt based on that data. The prompt is then displayed on the frontend.
 
 ## Technologies Used
 
-- **Backend:** Django, Django REST Framework
+- **Backend:** Express, Node.js
 - **LLM:** Local Ollama Mistral 7b
 - **Frontend:** React, JavaScript
 
@@ -15,34 +14,34 @@ This project is a Django-based backend API that generates prompts using data fro
 ### Backend
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/pathakjiop/Prompt-AI.git
    ```
 2. Navigate to the backend directory:
-   ```
+   ```bash
    cd backend
    ```
 3. Install required dependencies:
+   ```bash
+   npm install
    ```
-   pip install -r requirements.txt
-   ```
-4. Run the Django server:
-   ```
-   python manage.py runserver
+4. Run the Express server:
+   ```bash
+   node index.js
    ```
 
 ### Frontend
 
 1. Navigate to the frontend directory:
-   ```
+   ```bash
    cd frontend
    ```
 2. Install required dependencies:
-   ```
+   ```bash
    npm install
    ```
 3. Run the React app:
-   ```
+   ```bash
    npm start
    ```
 
@@ -53,10 +52,10 @@ This project is a Django-based backend API that generates prompts using data fro
 
 ## Files Description
 
-- `urls.py`: Defines the URL patterns for the Django project.
-- `models.py`: Defines the Prompt model used to store prompt data.
-- `serializers.py`: Defines the serializer for the Prompt model, which is used to convert complex data types into JSON and vice versa.
-- `views.py`: Defines the PromptGeneratorView, which handles POST requests to generate a prompt.
+- `app.js`: Defines the main Express application and routes.
+- `promptModel.js`: Defines the Prompt model used to store prompt data.
+- `promptController.js`: Defines the controller functions to handle requests and generate prompts.
+- `promptRoutes.js`: Defines the routes for the prompt-related endpoints.
 - `promptgenerator.js`: Defines the frontend React component and functions to fetch data from the backend and display the generated prompt.
 
 ## Contributing
